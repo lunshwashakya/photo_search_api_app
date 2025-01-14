@@ -3,12 +3,11 @@ import { API_ENDPOINT, UNSPLASH_API_KEY } from "./constants.js";
 export async function getPhotos(collectionId) {
     const url = 
     API_ENDPOINT + 
-    'collections?'+ 
+    'collections/'+ 
     collectionId +
     '/photos?client_id=' + 
     UNSPLASH_API_KEY + 
-    '&page' +
-    parseInt(Math.random() * 100);
+    '&page=1';
     const response = await fetch(url, {
         method:'GET',
     });
@@ -17,13 +16,20 @@ export async function getPhotos(collectionId) {
     return data;
 }
 
-async function populatePhotos(collectionId) {
+export async function populatePhotos(collectionId) {
     const photosElement = document.querySelector('#photos');
     const photos = await getPhotos(collectionId);
     const photoItemsElements = photos
     .map(item =>{
-        return `<img src="${item.url.thumb}" alt="${item.alt_description}">`;
+        return `<img src="${item.urls.thumb}" alt="${item.alt_description}">`;
     })
     .join('');
     photosElement.innerHTML = photoItemsElements;
+}
+
+export function makeSearchRequest (event) {
+    event.preventDefault();
+    
+    const queryElement = document.querySelector();
+    const query = 
 }
